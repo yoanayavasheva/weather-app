@@ -4,7 +4,7 @@ h3 {
 .card {
   background: #deeefc;
   border-color: #006ec5;
-  margin: 60px auto;
+  margin: 60px auto 5px;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
 }
 .change-city {
