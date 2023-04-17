@@ -10,10 +10,18 @@ h5 {
   font-size: 25px;
   font-style: italic;
 }
+
+footer {
+  text-align: center;
+}
+
+.container {
+  margin: 30px auto 10px;
+}
 .card {
   background: #deeefc;
   border-color: #006ec5;
-  margin: 60px auto 5px;
+  margin: 20px auto;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
