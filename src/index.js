@@ -72,28 +72,27 @@ celsiusLink.addEventListener("click", convertToCelsius);
 //Feature: Search engine with real data//
 
 function showWeather(response) {
-  console.log(response.data);
-  let temperature = response.data.list[0].main.temp;
+  console.log(response);
+  let temperature = response.data.daily[0].temperature.day;
   temperature = Math.round(temperature);
-  let precipitation = response.data.list[0].pop;
-  let precipitationPercentage = precipitation * 100;
-  let wind = response.data.list[0].wind.speed;
+  let humidity = response.data.daily[0].temperature.humidity;
+  let wind = response.data.daily[0].wind.speed;
   wind = Math.round(wind);
-  let currentTemp = document.querySelector("#temperature");
-  let currentPrecipitation = document.querySelector("#precipitation");
+  let currentTemperature = document.querySelector("#temperature");
+  let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
-  currentTemp.innerHTML = temperature;
-  currentPrecipitation.innerHTML = precipitationPercentage;
+  currentTemperature.innerHTML = temperature;
+  currentHumidity.innerHTML = humidity;
   currentWind.innerHTML = wind;
 }
 
-let apiKey = "8cac06f7ab6c10287cd06a316ff84a57";
+let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
 
 function showCity(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#change-city-input");
   let city = cityInput.value;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=1&units=metric&appid=${apiKey}`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
   let currentCity = document.querySelector("#current-city h1");
   currentCity.innerHTML = city;
   axios.get(apiUrl).then(showWeather);
@@ -107,19 +106,18 @@ form.addEventListener("submit", showCity);
 function showCurrentWeather(response) {
   console.log(response);
   let currentCity = document.querySelector("#current-city h1");
-  let city = response.data.city.name;
-  let temperature = response.data.list[0].main.temp;
+  let city = response.data.city;
+  let temperature = response.data.daily[0].temperature.day;
   temperature = Math.round(temperature);
-  let precipitation = response.data.list[0].pop;
-  let precipitationPercentage = precipitation * 100;
-  let wind = response.data.list[0].wind.speed;
+  let humidity = response.data.daily[0].temperature.humidity;
+  let wind = response.data.daily[0].wind.speed;
   wind = Math.round(wind);
-  let currentTemp = document.querySelector("#temperature");
-  let currentPrecipitation = document.querySelector("#precipitation");
+  let currentTemperature = document.querySelector("#temperature");
+  let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
   currentCity.innerHTML = city;
-  currentTemp.innerHTML = temperature;
-  currentPrecipitation.innerHTML = precipitationPercentage;
+  currentTemperature.innerHTML = temperature;
+  currentHumidity.innerHTML = humidity;
   currentWind.innerHTML = wind;
 }
 
@@ -127,7 +125,7 @@ function showCurrentCity(position) {
   console.log(position);
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  let apiUrlCurrent = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&cnt=1&units=metric&appid=${apiKey}`;
+  let apiUrlCurrent = `https://api.shecodes.io/weather/v1/forecast?lon=${longitude}&lat=${latitude}&key=${apiKey}&units=metric`;
   axios.get(apiUrlCurrent).then(showCurrentWeather);
 }
 
