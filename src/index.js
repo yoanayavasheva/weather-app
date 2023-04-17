@@ -7,6 +7,7 @@ let inTwoDays = document.querySelector(".in-two-days");
 let inThreeDays = document.querySelector(".in-three-days");
 let inFourDays = document.querySelector(".in-four-days");
 let inFiveDays = document.querySelector(".in-five-days");
+let inSixDays = document.querySelector(".in-six-days");
 
 let days = [
   "Sunday",
@@ -34,6 +35,7 @@ let dayInTwoDays = days[(now.getDay() + 2) % 7];
 let dayInThreeDays = days[(now.getDay() + 3) % 7];
 let dayInFourDays = days[(now.getDay() + 4) % 7];
 let dayInFiveDays = days[(now.getDay() + 5) % 7];
+let dayInSixDays = days[(now.getDay() + 6) % 7];
 
 currentDay.innerHTML = `${day} ${hours}:${minutes}`;
 inOneDay.innerHTML = dayInOneDay;
@@ -41,6 +43,7 @@ inTwoDays.innerHTML = dayInTwoDays;
 inThreeDays.innerHTML = dayInThreeDays;
 inFourDays.innerHTML = dayInFourDays;
 inFiveDays.innerHTML = dayInFiveDays;
+inSixDays.innerHTML = dayInSixDays;
 
 //Feature: Celsius/Fahrenheit unit calculation - PARTLY MANAGED
 
