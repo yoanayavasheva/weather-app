@@ -1,11 +1,21 @@
 h3 {
   margin-bottom: 25px;
 }
+
+h5 {
+  display: block;
+  margin: 10px auto 20px;
+  font-weight: 200;
+  color: grey;
+  font-size: 25px;
+  font-style: italic;
+}
 .card {
   background: #deeefc;
   border-color: #006ec5;
   margin: 60px auto 5px;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 .change-city {
   background: #add3f2;
@@ -22,6 +32,7 @@ h3 {
   border-radius: 25px;
   padding: 10px 10px;
   transition: all 200ms ease-in-out;
+  font-size: 15px;
 }
 
 .current-button {
@@ -37,7 +48,7 @@ h3 {
 .current-day {
   color: gray;
   font-style: italic;
-  font-weight: normal;
+  font-weight: 200;
   font-size: 25px;
 }
 .current-city {
@@ -67,9 +78,10 @@ h3 {
 }
 
 .row-days {
-  margin: 10px 25px 30px;
+  margin: 10px 10px 30px;
   font-weight: 500;
   text-align: center;
+  font-size: 16px;
 }
 
 .lowest {
