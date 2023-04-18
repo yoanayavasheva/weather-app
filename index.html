@@ -60,15 +60,19 @@
           <div class="col-6 today">
             <h3>
               Today
-              <span class="current-day"> Sunday </span>
+              <div class="current-day">
+                Last updated:
+                <span id="current-day"></span>
+              </div>
             </h3>
             <img
               src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
               alt="weather icon"
               id="icon-today"
+              class="icons"
             />
             <span class="temperature-today">
-              <span id="temperature"> 5 </span>
+              <span id="temperature"></span>
               <span id="unit-sign">°C</span>
             </span>
             <span class="units" id="units">
@@ -82,14 +86,14 @@
             </span>
             <div class="humidity-wind">
               Humidity:
-              <span id="humidity">63</span>
+              <span id="humidity"></span> %
               <br />
               Wind:
-              <span id="wind"> 4 </span> m/s
+              <span id="wind"></span> m/s
             </div>
           </div>
           <div class="col-5 current-city" id="current-city">
-            <h1>Varna</h1>
+            <h3 class="city"></h3>
           </div>
         </div>
         <hr />
@@ -97,24 +101,26 @@
         <div class="row-days">
           <div class="row">
             <div class="col">
-              <span class="in-one-day"> Tuesday </span>
+              <span class="in-one-day"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <span class="temperature">
-                <span id="temperature"> 5 </span>
+                <span id="temperature">5</span>
                 <span id="unit-sign">°C</span> / <span class="lowest">2°C</span>
               </span>
             </div>
             <div class="col">
-              <span class="in-two-days">Tuesday</span>
+              <span class="in-two-days"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <div class="temperature">
@@ -123,11 +129,12 @@
               </div>
             </div>
             <div class="col">
-              <span class="in-three-days">Wednesday</span>
+              <span class="in-three-days"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <div class="temperature">
@@ -140,11 +147,12 @@
           <br />
           <div class="row">
             <div class="col">
-              <span class="in-four-days">Thursday</span>
+              <span class="in-four-days"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <div class="temperature">
@@ -154,11 +162,12 @@
               </div>
             </div>
             <div class="col">
-              <span class="in-five-days">Friday</span>
+              <span class="in-five-days"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <div class="temperature">
@@ -168,11 +177,12 @@
               </div>
             </div>
             <div class="col">
-              <span class="in-six-days">Saturday</span>
+              <span class="in-six-days"></span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
                   alt="weather icon"
+                  class="icons"
                 />
               </div>
               <div class="temperature">

@@ -1,5 +1,5 @@
-h3 {
-  margin-bottom: 25px;
+.city {
+  font-size: 30px;
 }
 
 h5 {
@@ -53,11 +53,16 @@ footer {
 .today {
   margin: 0 0 0 40px;
 }
+
+.icons {
+  width: 90px;
+}
 .current-day {
   color: gray;
   font-style: italic;
   font-weight: 200;
-  font-size: 25px;
+  font-size: 20px;
+  margin: 0;
 }
 .current-city {
   text-align: right;

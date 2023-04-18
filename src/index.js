@@ -1,7 +1,7 @@
 //Feature 1: Using actual real dates for both currentDay and following days//
 let now = new Date();
 
-let currentDay = document.querySelector(".current-day");
+let currentDay = document.querySelector("#current-day");
 let inOneDay = document.querySelector(".in-one-day");
 let inTwoDays = document.querySelector(".in-two-days");
 let inThreeDays = document.querySelector(".in-three-days");
@@ -76,20 +76,20 @@ celsiusLink.addEventListener("click", convertToCelsius);
 
 function showWeatherToday(response) {
   console.log(response);
-  let temperature = response.data.daily[0].temperature.day;
-  temperature = Math.round(temperature);
-  let humidity = response.data.daily[0].temperature.humidity;
-  let wind = response.data.daily[0].wind.speed;
-  let icon = response.data.daily[0].condition.icon_url;
-  wind = Math.round(wind);
+  let temperatureElement = response.data.daily[0].temperature.day;
+  temperatureElement = Math.round(temperatureElement);
+  let humidityElement = response.data.daily[0].temperature.humidity;
+  let windElement = response.data.daily[0].wind.speed;
+  windElement = Math.round(windElement);
+  let iconElement = response.data.daily[0].condition.icon_url;
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
   let iconToday = document.querySelector("#icon-today");
-  currentTemperature.innerHTML = temperature;
-  currentHumidity.innerHTML = humidity;
-  currentWind.innerHTML = wind;
-  iconToday.innerHTML = icon;
+  currentTemperature.innerHTML = temperatureElement;
+  currentHumidity.innerHTML = humidityElement;
+  currentWind.innerHTML = windElement;
+  iconToday.innerHTML = iconElement;
 }
 
 let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
@@ -99,7 +99,7 @@ function showCity(event) {
   let cityInput = document.querySelector("#change-city-input");
   let city = cityInput.value;
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  let currentCity = document.querySelector("#current-city h1");
+  let currentCity = document.querySelector("#current-city h3");
   currentCity.innerHTML = city;
   axios.get(apiUrl).then(showWeatherToday);
 }
@@ -111,7 +111,7 @@ form.addEventListener("submit", showCity);
 
 function showCurrentWeather(response) {
   console.log(response);
-  let currentCity = document.querySelector("#current-city h1");
+  let currentCity = document.querySelector("#current-city h3");
   let city = response.data.city;
   let temperature = response.data.daily[0].temperature.day;
   temperature = Math.round(temperature);
