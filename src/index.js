@@ -74,22 +74,24 @@ celsiusLink.addEventListener("click", convertToCelsius);
 
 //Feature: Search engine with real data//
 
-function showWeatherToday(response) {
+function showWeather(response) {
   console.log(response);
   let temperatureElement = response.data.daily[0].temperature.day;
   temperatureElement = Math.round(temperatureElement);
   let humidityElement = response.data.daily[0].temperature.humidity;
   let windElement = response.data.daily[0].wind.speed;
   windElement = Math.round(windElement);
-  let iconElement = response.data.daily[0].condition.icon_url;
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
-  let iconToday = document.querySelector("#icon-today");
+  let iconTodayElement = document.querySelector("#icon-today");
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
-  iconToday.innerHTML = iconElement;
+  iconTodayElement.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png`
+  );
 }
 
 let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
@@ -101,7 +103,7 @@ function showCity(event) {
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
   let currentCity = document.querySelector("#current-city h3");
   currentCity.innerHTML = city;
-  axios.get(apiUrl).then(showWeatherToday);
+  axios.get(apiUrl).then(showWeather);
 }
 
 let form = document.querySelector("#change-city-form");
