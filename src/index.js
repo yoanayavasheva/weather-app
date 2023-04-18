@@ -81,16 +81,21 @@ function showWeather(response) {
   let humidityElement = response.data.daily[0].temperature.humidity;
   let windElement = response.data.daily[0].wind.speed;
   windElement = Math.round(windElement);
+  let iconTodayElement = response.data.daily[0].condition.icon;
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
-  let iconTodayElement = document.querySelector("#icon-today");
+  let currentWeatherIcon = document.querySelector("#icon-today");
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
-  iconTodayElement.setAttribute(
+  currentWeatherIcon.setAttribute(
     "src",
-    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png`
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${iconTodayElement}.png`
+  );
+  currentWeatherIcon.setAttribute(
+    "alt",
+    response.data.daily[0].condition.description
   );
 }
 
