@@ -105,6 +105,10 @@ footer {
   font-size: 12px;
 }
 
+.description {
+  text-transform: capitalize;
+}
+
 .row-days {
   margin: 10px 10px 30px;
   font-weight: 500;

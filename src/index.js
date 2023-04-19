@@ -58,13 +58,15 @@ function showWeather(response) {
   windElement = Math.round(windElement);
   let iconTodayElement = response.data.daily[0].condition.icon;
   let cityElement = response.data.city;
+  let descriptionElement = response.data.daily[0].condition.description;
+
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
   let currentWeatherIcon = document.querySelector("#icon-today");
   let currentCity = document.querySelector("#current-city h3");
+  let currentDescription = document.querySelector("#description");
 
-  currentCity.innerHTML = cityElement;
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
@@ -79,6 +81,8 @@ function showWeather(response) {
     "alt",
     response.data.daily[0].condition.description
   );
+  currentCity.innerHTML = cityElement;
+  currentDescription.innerHTML = descriptionElement;
 }
 
 let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
