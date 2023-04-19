@@ -82,10 +82,13 @@ function showWeather(response) {
   let windElement = response.data.daily[0].wind.speed;
   windElement = Math.round(windElement);
   let iconTodayElement = response.data.daily[0].condition.icon;
+  let cityElement = response.data.city;
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
   let currentWeatherIcon = document.querySelector("#icon-today");
+  let currentCity = document.querySelector("#current-city h3");
+  currentCity.innerHTML = cityElement;
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
@@ -106,8 +109,6 @@ function showCity(event) {
   let cityInput = document.querySelector("#change-city-input");
   let city = cityInput.value;
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  let currentCity = document.querySelector("#current-city h3");
-  currentCity.innerHTML = city;
   axios.get(apiUrl).then(showWeather);
 }
 
