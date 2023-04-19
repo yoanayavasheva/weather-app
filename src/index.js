@@ -45,38 +45,13 @@ inFourDays.innerHTML = dayInFourDays;
 inFiveDays.innerHTML = dayInFiveDays;
 inSixDays.innerHTML = dayInSixDays;
 
-//Feature: Celsius/Fahrenheit unit calculation - PARTLY MANAGED
-
-let temperatureElement = document.querySelector("#temperature");
-let temperature = temperatureElement.innerHTML; //this makes it a number??//
-temperature = Number(temperature);
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-let celsiusLink = document.querySelector("#celsius-link");
-let unitSign = document.querySelector("#unit-sign");
-let Ftemp = Math.round((temperature * 9) / 5 + 32);
-let Ctemp = temperature;
-
-function convertToFahrenheit(event) {
-  event.preventDefault();
-  temperatureElement.innerHTML = Ftemp;
-  unitSign.innerHTML = "°F";
-}
-
-function convertToCelsius(event) {
-  event.preventDefault();
-  temperatureElement.innerHTML = Ctemp;
-  unitSign.innerHTML = "°C";
-}
-
-fahrenheitLink.addEventListener("click", convertToFahrenheit);
-celsiusLink.addEventListener("click", convertToCelsius);
-
 //Feature: Search engine with real data//
 
 function showWeather(response) {
   console.log(response);
-  let temperatureElement = response.data.daily[0].temperature.day;
+
+  celsiusTemperature = response.data.daily[0].temperature.day;
+  let temperatureElement = celsiusTemperature;
   temperatureElement = Math.round(temperatureElement);
   let humidityElement = response.data.daily[0].temperature.humidity;
   let windElement = response.data.daily[0].wind.speed;
@@ -88,10 +63,14 @@ function showWeather(response) {
   let currentWind = document.querySelector("#wind");
   let currentWeatherIcon = document.querySelector("#icon-today");
   let currentCity = document.querySelector("#current-city h3");
+
   currentCity.innerHTML = cityElement;
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
+  unitSign.innerHTML = "°C";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
   currentWeatherIcon.setAttribute(
     "src",
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${iconTodayElement}.png`
@@ -115,6 +94,35 @@ function showCity(event) {
 let form = document.querySelector("#change-city-form");
 form.addEventListener("submit", showCity);
 
+//Feature: Celsius/Fahrenheit unit calculation - PARTLY MANAGED
+
+function displayFahrenheitTemperature(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  let fahrenheitTemperature = Math.round((celsiusTemperature * 9) / 5 + 32);
+  temperatureElement.innerHTML = fahrenheitTemperature;
+  unitSign.innerHTML = "°F";
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+}
+
+function displayCelsiusTemperature(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  unitSign.innerHTML = "°C";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+}
+
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+let celsiusLink = document.querySelector("#celsius-link");
+let unitSign = document.querySelector("#unit-sign");
+let celsiusTemperature = null;
+
+fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+celsiusLink.addEventListener("click", displayCelsiusTemperature);
+
 //Feature: Current Location button//
 
 function showCurrentWeather(response) {
@@ -133,6 +141,9 @@ function showCurrentWeather(response) {
   currentTemperature.innerHTML = temperature;
   currentHumidity.innerHTML = humidity;
   currentWind.innerHTML = wind;
+  unitSign.innerHTML = "°C";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 }
 
 function showCurrentCity(position) {
