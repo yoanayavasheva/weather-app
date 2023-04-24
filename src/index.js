@@ -2,12 +2,6 @@
 let now = new Date();
 
 let currentDay = document.querySelector("#current-day");
-let inOneDay = document.querySelector(".in-one-day");
-let inTwoDays = document.querySelector(".in-two-days");
-let inThreeDays = document.querySelector(".in-three-days");
-let inFourDays = document.querySelector(".in-four-days");
-let inFiveDays = document.querySelector(".in-five-days");
-let inSixDays = document.querySelector(".in-six-days");
 
 let days = [
   "Sunday",
@@ -30,20 +24,62 @@ if (minutes < 10) {
   minutes = `0${minutes}`;
 }
 
-let dayInOneDay = days[(now.getDay() + 1) % 7];
-let dayInTwoDays = days[(now.getDay() + 2) % 7];
-let dayInThreeDays = days[(now.getDay() + 3) % 7];
-let dayInFourDays = days[(now.getDay() + 4) % 7];
-let dayInFiveDays = days[(now.getDay() + 5) % 7];
-let dayInSixDays = days[(now.getDay() + 6) % 7];
+//let dayInOneDay = days[(now.getDay() + 1) % 7];
+//let dayInTwoDays = days[(now.getDay() + 2) % 7];
+//let dayInThreeDays = days[(now.getDay() + 3) % 7];
+//let dayInFourDays = days[(now.getDay() + 4) % 7];
+//let dayInFiveDays = days[(now.getDay() + 5) % 7];
+//let dayInSixDays = days[(now.getDay() + 6) % 7];
 
 currentDay.innerHTML = `${day} ${hours}:${minutes}`;
-inOneDay.innerHTML = dayInOneDay;
-inTwoDays.innerHTML = dayInTwoDays;
-inThreeDays.innerHTML = dayInThreeDays;
-inFourDays.innerHTML = dayInFourDays;
-inFiveDays.innerHTML = dayInFiveDays;
-inSixDays.innerHTML = dayInSixDays;
+
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  forecastElement.innerHTML = `
+      <div class="row">
+        <div class="col">
+          <span class="weather-forecast-date">Day</span>
+          <div>
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+              alt="weather icon"
+              class="icons"
+            />
+          </div>
+          <span class="temperature">
+            <span class="highest-temperature">5</span>
+            <span class="unit-sign">°C</span> /
+            <span class="lowest">
+              <span class="lowest-temperature">2</span>
+              <span class="unit-sign">°C</span>
+            </span>
+          </span>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <span class="weather-forecast-date">Day</span>
+          <div>
+            <img
+              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+              alt="weather icon"
+              class="icons"
+            />
+          </div>
+          <span class="temperature">
+            <span class="highest-temperature">5</span>
+            <span class="unit-sign">°C</span> /
+            <span class="lowest">
+              <span class="lowest-temperature">2</span>
+              <span class="unit-sign">°C</span>
+            </span>
+          </span>
+        </div>
+      </div>
+  `;
+}
 
 //Feature: Search engine with real data//
 
@@ -66,6 +102,8 @@ function showWeather(response) {
   let currentWeatherIcon = document.querySelector("#icon-today");
   let currentCity = document.querySelector("#current-city h3");
   let currentDescription = document.querySelector("#description");
+
+  displayForecast();
 
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
