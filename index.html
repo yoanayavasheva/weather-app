@@ -102,10 +102,10 @@
         </div>
         <hr />
         <h5>Long-term forecast</h5>
-        <div class="row-days">
+        <div class="forecast-days" id="forecast">
           <div class="row">
             <div class="col">
-              <span class="in-one-day"></span>
+              <span class="weather-forecast-date">Day</span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
@@ -114,44 +114,19 @@
                 />
               </div>
               <span class="temperature">
-                <span id="temperature">5</span>
-                <span id="unit-sign">°C</span> / <span class="lowest">2°C</span>
+                <span class="highest-temperature">5</span>
+                <span class="unit-sign">°C</span> /
+                <span class="lowest">
+                  <span class="lowest-temperature">2</span>
+                  <span class="unit-sign">°C</span>
+                </span>
               </span>
-            </div>
-            <div class="col">
-              <span class="in-two-days"></span>
-              <div>
-                <img
-                  src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-                  alt="weather icon"
-                  class="icons"
-                />
-              </div>
-              <div class="temperature">
-                <span id="temperature"> 5 </span>
-                <span id="unit-sign">°C</span> / <span class="lowest">2°C</span>
-              </div>
-            </div>
-            <div class="col">
-              <span class="in-three-days"></span>
-              <div>
-                <img
-                  src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-                  alt="weather icon"
-                  class="icons"
-                />
-              </div>
-              <div class="temperature">
-                <span id="temperature"> 5 </span>
-                <span id="unit-sign">°C</span> /
-                <span class="lowest">2°C</span>
-              </div>
             </div>
           </div>
           <br />
           <div class="row">
             <div class="col">
-              <span class="in-four-days"></span>
+              <span class="weather-forecast-date">Day</span>
               <div>
                 <img
                   src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
@@ -159,41 +134,14 @@
                   class="icons"
                 />
               </div>
-              <div class="temperature">
-                <span id="temperature"> 5 </span>
-                <span id="unit-sign">°C</span> /
-                <span class="lowest">2°C</span>
-              </div>
-            </div>
-            <div class="col">
-              <span class="in-five-days"></span>
-              <div>
-                <img
-                  src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-                  alt="weather icon"
-                  class="icons"
-                />
-              </div>
-              <div class="temperature">
-                <span id="temperature"> 5 </span>
-                <span id="unit-sign">°C</span> /
-                <span class="lowest">2°C</span>
-              </div>
-            </div>
-            <div class="col">
-              <span class="in-six-days"></span>
-              <div>
-                <img
-                  src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-                  alt="weather icon"
-                  class="icons"
-                />
-              </div>
-              <div class="temperature">
-                <span id="temperature"> 5 </span>
-                <span id="unit-sign">°C</span> /
-                <span class="lowest">2°C</span>
-              </div>
+              <span class="temperature">
+                <span class="highest-temperature">5</span>
+                <span class="unit-sign">°C</span> /
+                <span class="lowest">
+                  <span class="lowest-temperature">2</span>
+                  <span class="unit-sign">°C</span>
+                </span>
+              </span>
             </div>
           </div>
         </div>
