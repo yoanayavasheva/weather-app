@@ -13,7 +13,8 @@ let days = [
   "Saturday",
 ];
 
-let day = days[now.getDay()];
+let today = days[now.getDay()];
+console.log(now.getDay());
 
 let hours = now.getHours();
 if (hours < 10) {
@@ -24,54 +25,50 @@ if (minutes < 10) {
   minutes = `0${minutes}`;
 }
 
-currentDay.innerHTML = `${day} ${hours}:${minutes}`;
+currentDay.innerHTML = `${today} ${hours}:${minutes}`;
 
-function displayForecast() {
+function formatForecastDates(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+
+  return days[day].substring(0, 3);
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
+  forecast = forecast.slice(1);
+
   let forecastElement = document.querySelector("#forecast");
-
-  let forecastDay1 = days[(now.getDay() + 1) % 7];
-  forecastDay1 = forecastDay1.substring(0, 3);
-  let forecastDay2 = days[(now.getDay() + 2) % 7];
-  forecastDay2 = forecastDay2.substring(0, 3);
-  let forecastDay3 = days[(now.getDay() + 3) % 7];
-  forecastDay3 = forecastDay3.substring(0, 3);
-  let forecastDay4 = days[(now.getDay() + 4) % 7];
-  forecastDay4 = forecastDay4.substring(0, 3);
-  let forecastDay5 = days[(now.getDay() + 5) % 7];
-  forecastDay5 = forecastDay5.substring(0, 3);
-  let forecastDay6 = days[(now.getDay() + 6) % 7];
-  forecastDay6 = forecastDay6.substring(0, 3);
-
-  let forecastDays = [
-    forecastDay1,
-    forecastDay2,
-    forecastDay3,
-    forecastDay4,
-    forecastDay5,
-    forecastDay6,
-  ];
 
   let forecastHTML = `<div class="row">`;
 
-  forecastDays.forEach(function (forecastDay) {
+  forecast.forEach(function (forecastDay) {
     forecastHTML =
       forecastHTML +
       `
       <div class="col-2">
-        <span class="weather-forecast-date">${forecastDay}</span>
+        <span class="weather-forecast-date">${formatForecastDates(
+          forecastDay.time
+        )}</span>
         <div>
           <img
-            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-            alt="weather icon"
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+              forecastDay.condition.icon
+            }.png"
+            alt="${forecastDay.condition.description}"
             class="icons"
             id="weather-icon"
           />
         </div>
         <span class="temperature">
-          <span class="highest-temperature" id="max-temperature">5</span>
+          <span class="highest-temperature" id="max-temperature">${Math.round(
+            forecastDay.temperature.maximum
+          )}</span>
           <span class="unit-sign">°C</span> 
           <span class="lowest"> /
-            <span class="lowest-temperature" id="min-temperature">2</span>
+            <span class="lowest-temperature" id="min-temperature">${Math.round(
+              forecastDay.temperature.minimum
+            )}</span>
             <span class="unit-sign">°C</span>
           </span>
         </span>
@@ -81,34 +78,6 @@ function displayForecast() {
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
-}
-
-//Feature: Search engine with real data//
-
-function getForecast(response) {
-  console.log(response);
-  let minTemperatureElement = Math.round(
-    response.data.daily[1].temperature.minimum
-  );
-  let maxTemperatureElement = Math.round(
-    response.data.daily[1].temperature.maximum
-  );
-  let weatherIconElement = response.data.daily[1].condition.icon;
-  let weatherDescriptionElement = response.data.daily[1].condition.description;
-
-  let minTemperature = document.querySelector("#min-temperature");
-  let maxTemperature = document.querySelector("#max-temperature");
-  let weatherIcon = document.querySelector("#weather-icon");
-
-  minTemperature.innerHTML = minTemperatureElement;
-  maxTemperature.innerHTML = maxTemperatureElement;
-
-  weatherIcon.setAttribute(
-    "src",
-    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${weatherIconElement}.png`
-  );
-  weatherIcon.setAttribute("alt", weatherDescriptionElement);
-  weatherIcon.innerHTML = weatherIconElement;
 }
 
 function displayWeather(response) {
@@ -131,7 +100,7 @@ function displayWeather(response) {
   let currentCity = document.querySelector("#current-city h3");
   let currentDescription = document.querySelector("#description");
 
-  displayForecast();
+  displayForecast(response);
 
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
@@ -149,8 +118,6 @@ function displayWeather(response) {
   );
   currentCity.innerHTML = cityElement;
   currentDescription.innerHTML = descriptionElement;
-
-  getForecast(response);
 }
 
 let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
@@ -165,8 +132,6 @@ function showCity(event) {
 
 let form = document.querySelector("#change-city-form");
 form.addEventListener("submit", showCity);
-
-//Feature: Celsius/Fahrenheit unit calculation - PARTLY MANAGED
 
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
