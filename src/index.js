@@ -24,45 +24,54 @@ if (minutes < 10) {
   minutes = `0${minutes}`;
 }
 
-//let dayInOneDay = days[(now.getDay() + 1) % 7];
-//let dayInTwoDays = days[(now.getDay() + 2) % 7];
-//let dayInThreeDays = days[(now.getDay() + 3) % 7];
-//let dayInFourDays = days[(now.getDay() + 4) % 7];
-//let dayInFiveDays = days[(now.getDay() + 5) % 7];
-//let dayInSixDays = days[(now.getDay() + 6) % 7];
-
 currentDay.innerHTML = `${day} ${hours}:${minutes}`;
 
 function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
-  let forecastHTML = `<div class="row">`;
-  let days = [
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-    "Monday",
+  let forecastDay1 = days[(now.getDay() + 1) % 7];
+  forecastDay1 = forecastDay1.substring(0, 3);
+  let forecastDay2 = days[(now.getDay() + 2) % 7];
+  forecastDay2 = forecastDay2.substring(0, 3);
+  let forecastDay3 = days[(now.getDay() + 3) % 7];
+  forecastDay3 = forecastDay3.substring(0, 3);
+  let forecastDay4 = days[(now.getDay() + 4) % 7];
+  forecastDay4 = forecastDay4.substring(0, 3);
+  let forecastDay5 = days[(now.getDay() + 5) % 7];
+  forecastDay5 = forecastDay5.substring(0, 3);
+  let forecastDay6 = days[(now.getDay() + 6) % 7];
+  forecastDay6 = forecastDay6.substring(0, 3);
+
+  let forecastDays = [
+    forecastDay1,
+    forecastDay2,
+    forecastDay3,
+    forecastDay4,
+    forecastDay5,
+    forecastDay6,
   ];
-  days.forEach(function (day) {
+
+  let forecastHTML = `<div class="row">`;
+
+  forecastDays.forEach(function (forecastDay) {
     forecastHTML =
       forecastHTML +
       `
       <div class="col-2">
-        <span class="weather-forecast-date">Day</span>
+        <span class="weather-forecast-date">${forecastDay}</span>
         <div>
           <img
             src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
             alt="weather icon"
             class="icons"
+            id="weather-icon"
           />
         </div>
         <span class="temperature">
-          <span class="highest-temperature">5</span>
+          <span class="highest-temperature" id="max-temperature">5</span>
           <span class="unit-sign">°C</span> 
           <span class="lowest"> /
-            <span class="lowest-temperature">2</span>
+            <span class="lowest-temperature" id="min-temperature">2</span>
             <span class="unit-sign">°C</span>
           </span>
         </span>
@@ -74,10 +83,35 @@ function displayForecast() {
   forecastElement.innerHTML = forecastHTML;
 }
 
-displayForecast();
 //Feature: Search engine with real data//
 
-function showWeather(response) {
+function getForecast(response) {
+  console.log(response);
+  let minTemperatureElement = Math.round(
+    response.data.daily[1].temperature.minimum
+  );
+  let maxTemperatureElement = Math.round(
+    response.data.daily[1].temperature.maximum
+  );
+  let weatherIconElement = response.data.daily[1].condition.icon;
+  let weatherDescriptionElement = response.data.daily[1].condition.description;
+
+  let minTemperature = document.querySelector("#min-temperature");
+  let maxTemperature = document.querySelector("#max-temperature");
+  let weatherIcon = document.querySelector("#weather-icon");
+
+  minTemperature.innerHTML = minTemperatureElement;
+  maxTemperature.innerHTML = maxTemperatureElement;
+
+  weatherIcon.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${weatherIconElement}.png`
+  );
+  weatherIcon.setAttribute("alt", weatherDescriptionElement);
+  weatherIcon.innerHTML = weatherIconElement;
+}
+
+function displayWeather(response) {
   console.log(response);
 
   celsiusTemperature = response.data.daily[0].temperature.day;
@@ -97,6 +131,8 @@ function showWeather(response) {
   let currentCity = document.querySelector("#current-city h3");
   let currentDescription = document.querySelector("#description");
 
+  displayForecast();
+
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
@@ -113,6 +149,8 @@ function showWeather(response) {
   );
   currentCity.innerHTML = cityElement;
   currentDescription.innerHTML = descriptionElement;
+
+  getForecast(response);
 }
 
 let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
@@ -122,7 +160,7 @@ function showCity(event) {
   let cityInput = document.querySelector("#change-city-input");
   let city = cityInput.value;
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(showWeather);
+  axios.get(apiUrl).then(displayWeather);
 }
 
 let form = document.querySelector("#change-city-form");
@@ -159,7 +197,7 @@ celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 //Feature: Current Location button//
 
-function showCurrentWeather(response) {
+function displayCurrentWeather(response) {
   console.log(response);
   let currentCity = document.querySelector("#current-city h3");
   let city = response.data.city;
@@ -180,16 +218,16 @@ function showCurrentWeather(response) {
   fahrenheitLink.classList.remove("active");
 }
 
-function showCurrentCity(position) {
+function displayCurrentCity(position) {
   console.log(position);
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
   let apiUrlCurrent = `https://api.shecodes.io/weather/v1/forecast?lon=${longitude}&lat=${latitude}&key=${apiKey}&units=metric`;
-  axios.get(apiUrlCurrent).then(showCurrentWeather);
+  axios.get(apiUrlCurrent).then(displayCurrentWeather);
 }
 
 function findCurrent() {
-  navigator.geolocation.getCurrentPosition(showCurrentCity);
+  navigator.geolocation.getCurrentPosition(displayCurrentCity);
 }
 
 let currentLocationButton = document.querySelector("#current-button");
