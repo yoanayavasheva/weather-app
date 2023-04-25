@@ -1,4 +1,3 @@
-//Feature 1: Using actual real dates for both currentDay and following days//
 let now = new Date();
 
 let currentDay = document.querySelector("#current-day");
@@ -14,7 +13,6 @@ let days = [
 ];
 
 let today = days[now.getDay()];
-console.log(now.getDay());
 
 let hours = now.getHours();
 if (hours < 10) {
@@ -26,6 +24,14 @@ if (minutes < 10) {
 }
 
 currentDay.innerHTML = `${today} ${hours}:${minutes}`;
+
+let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
+
+let form = document.querySelector("#change-city-form");
+form.addEventListener("submit", showCity);
+
+let currentLocationButton = document.querySelector("#current-button");
+currentLocationButton.addEventListener("click", findCurrent);
 
 function formatForecastDates(timestamp) {
   let date = new Date(timestamp * 1000);
@@ -81,8 +87,6 @@ function displayForecast(response) {
 }
 
 function displayWeather(response) {
-  console.log(response);
-
   celsiusTemperature = response.data.daily[0].temperature.day;
   let temperatureElement = celsiusTemperature;
   temperatureElement = Math.round(temperatureElement);
@@ -105,9 +109,6 @@ function displayWeather(response) {
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
   currentWind.innerHTML = windElement;
-  unitSign.innerHTML = "°C";
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
   currentWeatherIcon.setAttribute(
     "src",
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${iconTodayElement}.png`
@@ -120,8 +121,6 @@ function displayWeather(response) {
   currentDescription.innerHTML = descriptionElement;
 }
 
-let apiKey = `0t4b903dofe6fcc186a3f4313271559b`;
-
 function showCity(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#change-city-input");
@@ -130,40 +129,7 @@ function showCity(event) {
   axios.get(apiUrl).then(displayWeather);
 }
 
-let form = document.querySelector("#change-city-form");
-form.addEventListener("submit", showCity);
-
-function displayFahrenheitTemperature(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#temperature");
-  let fahrenheitTemperature = Math.round((celsiusTemperature * 9) / 5 + 32);
-  temperatureElement.innerHTML = fahrenheitTemperature;
-  unitSign.innerHTML = "°F";
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-}
-
-function displayCelsiusTemperature(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#temperature");
-  temperatureElement.innerHTML = Math.round(celsiusTemperature);
-  unitSign.innerHTML = "°C";
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
-}
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-let celsiusLink = document.querySelector("#celsius-link");
-let unitSign = document.querySelector("#unit-sign");
-let celsiusTemperature = null;
-
-fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
-celsiusLink.addEventListener("click", displayCelsiusTemperature);
-
-//Feature: Current Location button//
-
 function displayCurrentWeather(response) {
-  console.log(response);
   let currentCity = document.querySelector("#current-city h3");
   let city = response.data.city;
   let temperature = response.data.daily[0].temperature.day;
@@ -171,20 +137,33 @@ function displayCurrentWeather(response) {
   let humidity = response.data.daily[0].temperature.humidity;
   let wind = response.data.daily[0].wind.speed;
   wind = Math.round(wind);
+  let iconTodayElement = response.data.daily[0].condition.icon;
+  let descriptionElement = response.data.daily[0].condition.description;
+
   let currentTemperature = document.querySelector("#temperature");
   let currentHumidity = document.querySelector("#humidity");
   let currentWind = document.querySelector("#wind");
+  let currentWeatherIcon = document.querySelector("#icon-today");
+  let currentDescription = document.querySelector("#description");
+
   currentCity.innerHTML = city;
   currentTemperature.innerHTML = temperature;
   currentHumidity.innerHTML = humidity;
   currentWind.innerHTML = wind;
-  unitSign.innerHTML = "°C";
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
+  currentWeatherIcon.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${iconTodayElement}.png`
+  );
+  currentWeatherIcon.setAttribute(
+    "alt",
+    response.data.daily[0].condition.description
+  );
+  currentDescription.innerHTML = descriptionElement;
+
+  displayForecast(response);
 }
 
 function displayCurrentCity(position) {
-  console.log(position);
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
   let apiUrlCurrent = `https://api.shecodes.io/weather/v1/forecast?lon=${longitude}&lat=${latitude}&key=${apiKey}&units=metric`;
@@ -194,6 +173,3 @@ function displayCurrentCity(position) {
 function findCurrent() {
   navigator.geolocation.getCurrentPosition(displayCurrentCity);
 }
-
-let currentLocationButton = document.querySelector("#current-button");
-currentLocationButton.addEventListener("click", findCurrent);
