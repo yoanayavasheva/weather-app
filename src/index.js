@@ -36,51 +36,45 @@ currentDay.innerHTML = `${day} ${hours}:${minutes}`;
 function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
-  forecastElement.innerHTML = `
-      <div class="row">
-        <div class="col">
-          <span class="weather-forecast-date">Day</span>
-          <div>
-            <img
-              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-              alt="weather icon"
-              class="icons"
-            />
-          </div>
-          <span class="temperature">
-            <span class="highest-temperature">5</span>
-            <span class="unit-sign">°C</span> /
-            <span class="lowest">
-              <span class="lowest-temperature">2</span>
-              <span class="unit-sign">°C</span>
-            </span>
-          </span>
+  let forecastHTML = `<div class="row">`;
+  let days = [
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+    "Monday",
+  ];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+      <div class="col-2">
+        <span class="weather-forecast-date">Day</span>
+        <div>
+          <img
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
+            alt="weather icon"
+            class="icons"
+          />
         </div>
-      </div>
-      <br />
-      <div class="row">
-        <div class="col">
-          <span class="weather-forecast-date">Day</span>
-          <div>
-            <img
-              src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png"
-              alt="weather icon"
-              class="icons"
-            />
-          </div>
-          <span class="temperature">
-            <span class="highest-temperature">5</span>
-            <span class="unit-sign">°C</span> /
-            <span class="lowest">
-              <span class="lowest-temperature">2</span>
-              <span class="unit-sign">°C</span>
-            </span>
+        <span class="temperature">
+          <span class="highest-temperature">5</span>
+          <span class="unit-sign">°C</span> 
+          <span class="lowest"> /
+            <span class="lowest-temperature">2</span>
+            <span class="unit-sign">°C</span>
           </span>
-        </div>
+        </span>
       </div>
   `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
 }
 
+displayForecast();
 //Feature: Search engine with real data//
 
 function showWeather(response) {
@@ -102,8 +96,6 @@ function showWeather(response) {
   let currentWeatherIcon = document.querySelector("#icon-today");
   let currentCity = document.querySelector("#current-city h3");
   let currentDescription = document.querySelector("#description");
-
-  displayForecast();
 
   currentTemperature.innerHTML = temperatureElement;
   currentHumidity.innerHTML = humidityElement;
